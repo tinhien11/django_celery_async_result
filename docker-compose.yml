@@ -4,6 +4,8 @@ services:
     image: redis
   web:
     build: .
+    environment:
+      C_FORCE_ROOT: "yes"
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code

@@ -1,7 +1,5 @@
 # django_celery_async_result
 
-How to run (without docker):   
-1. start redis   
-2. python manage.py celeryd   
-3. python manage.py migrate   
-4. python manage.py runserver   
+How to run with docker:
+1. docker-compose up
+2. docker-compose run web python manage.py celeryd
