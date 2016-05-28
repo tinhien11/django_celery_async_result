@@ -1,0 +1,25 @@
+# Python django
+*.pyc
+__pycache__
+db.sqlite3
+
+venv
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+
+#IDE
+.DS_Store
+.idea
+*~
+
+
+# Logs
+*.log
+
+/static/
+
+get_update_parcel_inline.html
