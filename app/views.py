@@ -8,9 +8,6 @@ from celery.result import AsyncResult
 def create_task(request):
     if request.method == 'POST':
         task = add.delay(request.POST['x'], request.POST['y'])
-        print task
-        print task.state
-        # print task.get()
         return redirect('task_result', task_id=task.task_id)
     return render(request, 'create_task.html', {})
 
