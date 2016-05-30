@@ -22,7 +22,7 @@ class FshareSpider(scrapy.Spider):
                                                 url='https://www.fshare.vn/login')
 
     def after_login(self, response):
-        yield scrapy.FormRequest.from_response(response,
+        return scrapy.FormRequest.from_response(response,
                                                formdata={
                                                    'DownloadForm[pwd]': '',
                                                    'DownloadForm[linkcode]': ''},
@@ -32,3 +32,5 @@ class FshareSpider(scrapy.Spider):
 
     def after_post(self, response):
         print response.url
+        return {'url': response.url}
+
