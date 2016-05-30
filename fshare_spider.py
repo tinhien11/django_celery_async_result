@@ -31,6 +31,5 @@ class FshareSpider(scrapy.Spider):
                                                url='https://www.fshare.vn/file/IXYOB8VHIUHI')
 
     def after_post(self, response):
-        print response.url
         return {'url': response.url}
 
