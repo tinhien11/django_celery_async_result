@@ -14,16 +14,6 @@ LOGIN_PASSWORD = '721992'
 LOGIN_URL = 'https://www.fshare.vn/login'
 
 
-def login_basic():
-    """fails because not using formkey
-    """
-    data = {'email': LOGIN_EMAIL, 'password': LOGIN_PASSWORD}
-    encoded_data = urllib.urlencode(data)
-    request = urllib2.Request(LOGIN_URL, encoded_data)
-    response = urllib2.urlopen(request)
-    print response.geturl()
-
-
 def login_formkey():
     """fails because not using cookies to match formkey
     """
