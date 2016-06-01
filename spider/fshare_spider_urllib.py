@@ -36,6 +36,7 @@ def login_cookies():
     data = parse_form(html)
     data['LoginForm[email]'] = LOGIN_EMAIL
     data['LoginForm[password]'] = LOGIN_PASSWORD
+    del data['yt0'] # remove unicode unneed item for encode
     encoded_data = urllib.urlencode(data)
     request = urllib2.Request(LOGIN_URL, encoded_data)
     response = opener.open(request)
@@ -51,7 +52,6 @@ def parse_form(html):
     for e in tree.cssselect('form input'):
         if e.get('name'):
             data[e.get('name')] = e.get('value')
-    del data['yt0']
     return data
 
 
