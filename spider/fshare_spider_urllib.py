@@ -5,7 +5,7 @@ import cookielib
 import lxml.html
 
 LOGIN_EMAIL = 'thanhtinpk092007@gmail.com'
-LOGIN_PASSWORD = '721992'
+LOGIN_PASSWORD = '7219922'
 LOGIN_URL = 'https://www.fshare.vn/login'
 
 
@@ -26,7 +26,7 @@ def login_cookies():
     """working login
     """
     cj = cookielib.CookieJar()
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    opener = urllib2.build_opener(urllib2.ProxyHandler({'http': 'http://121.22.252.248:8080'}), urllib2.HTTPCookieProcessor(cj))
     html = opener.open(LOGIN_URL).read()
     data = parse_form(html)
     data['LoginForm[email]'] = LOGIN_EMAIL
@@ -62,6 +62,9 @@ def main():
     print response.geturl()
     print response.code
     print response.info()
+
+    request = urllib2.Request("https://www.fshare.vn/logout", None)
+    opener.open(request)
 
 
 if __name__ == '__main__':
