@@ -1,9 +1,8 @@
-from spider.fshare_spider_urllib import login_cookies, get_download_url
+from spider.vnpost_spider import parse_main, normalize
 from celery import task
 
 
 @task()
-def task_get_link_fshare(fshare_url):
-    opener = login_cookies()
-    response = get_download_url(opener, fshare_url)
-    return response.geturl()
+def task_get_data_from_spider(parcel_id):
+    html = parse_main(parcel_id)
+    return normalize(html)
