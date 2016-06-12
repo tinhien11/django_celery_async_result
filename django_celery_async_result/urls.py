@@ -13,12 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
-from app import views
+from app import views, views_spider
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.create_task),
     url(r'^result/(?P<task_id>.+)/$', views.task_result, name='task_result'),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
+    url(r'^spider/$', views_spider.SpiderList.as_view()),
+
 ]
