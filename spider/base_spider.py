@@ -4,11 +4,14 @@ import urllib2
 import cookielib
 import lxml.html
 
+TRACKING_URL = ''
+
 
 class BaseSpider:
-    def __init__(self, tracking_url, parcel_id):
-        self.tracking_url = tracking_url
+    def __init__(self, parcel_id):
         self.parcel_id = parcel_id
+
+    tracking_url = TRACKING_URL
 
     def parse_form(self, html):
         """extract all input properties from the form
@@ -80,5 +83,5 @@ class BaseSpider:
 
 
 if __name__ == '__main__':
-    a = BaseSpider('http://www.vnpost.vn/vi-vn/dinh-vi/buu-pham?', 'EL745355158vn')
+    a = BaseSpider('EL745355158vn')
     print a.normalize()
