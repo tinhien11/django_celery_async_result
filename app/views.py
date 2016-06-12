@@ -15,6 +15,7 @@ def create_task(request):
 def task_result(request, task_id):
     result = AsyncResult(task_id)
     if result.ready():
-        return HttpResponse('Result is: %s' % (result.result,))
+        res = repr(result.result).decode("unicode-escape")
+        return HttpResponse('Result is: %s' % (res,))
     else:
         return HttpResponse('Result is not ready yet!')

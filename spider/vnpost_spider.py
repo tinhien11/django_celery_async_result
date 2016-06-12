@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import urllib
 import urllib2
 import cookielib
@@ -11,18 +11,23 @@ def normalize(html):
     tree = lxml.html.fromstring(html)
     overview = {}
 
-    packed_code = tree.find_class('col-sm-3 package-code')[0].getchildren()
-    overview[packed_code[0].text_content().encode("utf-8")] = packed_code[2].text_content().strip()
+    parcel_id_elm = tree.find_class('col-sm-3 package-code')[0].getchildren()
+    parcel_id = parcel_id_elm[2].text_content().strip()
+    overview['parcel_id'] = parcel_id
 
-    package_weight = tree.find_class('col-sm-4 package-weight')[0].getchildren()
-    overview[package_weight[0].text_content().encode("utf-8")] = package_weight[2].text_content().strip()
+    parcel_weight_elm = tree.find_class('col-sm-4 package-weight')[0].getchildren()
+    parcel_weight = parcel_weight_elm[2].text_content().strip()
+    overview['parcel_weight'] = parcel_weight
 
-    package_location = tree.find_class('col-sm-4 package-location')[0].getchildren()
-    overview[package_location[0].text_content()] = package_location[2].text_content().strip()
+    package_status_elm = tree.find_class('col-sm-4 package-location')[0].getchildren()
+    parcel_status = package_status_elm[2].text_content().strip()
+    overview['parcel_status'] = parcel_status
 
-    tracking_info = tree.find_class('table-tracking-info')[0].getchildren()
-    overview[tracking_info[0].text_content()] = tracking_info[1].text_content()
-    overview[tracking_info[1].text_content()] = tracking_info[2].text_content()
+
+    #
+    # tracking_info = tree.find_class('table-tracking-info')[0].getchildren()
+    # overview[tracking_info[0].text_content()] = tracking_info[1].text_content()
+    # overview[tracking_info[1].text_content()] = tracking_info[2].text_content()
 
 
 
