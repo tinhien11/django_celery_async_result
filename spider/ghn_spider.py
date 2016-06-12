@@ -15,6 +15,22 @@ class GHNSpider(BaseSpider):
         response = opener.open(request)
         return response.read()
 
+    def normalize(self):
+        tree = lxml.html.fromstring(self.parse_main())
+        overview = {}
+        try:
+            tracking_table_elm = tree.find_class('tracking-table')[0].getchildren()
+            parcel_id = self.parcel_id
+            overview['parcel_id'] = parcel_id
+            overview['deliver_time'] = tracking_table_elm[0].getchildren()[1].text.strip()
+            overview['parcel_weight'] = tracking_table_elm[1].getchildren()[1].text.strip()
+            overview['parcel_size'] = tracking_table_elm[2].getchildren()[1].text.strip()
+            overview['parcel_price'] = tracking_table_elm[3].getchildren()[1].text.strip()
+            overview['parcel_status'] = tree.find_class('fix-status active')[0].text.strip()
+        except Exception as error:
+            pass
+        return overview
+
 
 if __name__ == '__main__':
     ghn = GHNSpider('MPDS-321351882-8472')
