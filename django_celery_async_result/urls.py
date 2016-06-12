@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from app import views, views_spider
+from app import views_spider
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.create_task),
-    url(r'^result/(?P<task_id>.+)/$', views.task_result, name='task_result'),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^spider/$', views_spider.SpiderList.as_view()),
 

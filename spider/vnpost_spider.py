@@ -27,8 +27,8 @@ def normalize(html):
 
         tracking_info_elm = tree.find_class('table-tracking-info')[0].getchildren()
         country_elm = tracking_info_elm[0]
-        from_country = country_elm[1].text_content()
-        to_country = country_elm[3].text_content()
+        from_country = country_elm[1].text_content().strip()
+        to_country = country_elm[3].text_content().strip()
         overview['from_country'] = from_country
         overview['from to_country'] = to_country
     except Exception as error:
@@ -40,11 +40,11 @@ def normalize(html):
         for e in list_detail_event:
             event_dict = {}
             list_event_elm = e.getchildren()
-            event_time = list_event_elm[0].text_content()
+            event_time = list_event_elm[0].text_content().strip()
             event_dict['event_time'] = event_time
-            event_name = list_event_elm[1].text_content()
+            event_name = list_event_elm[1].text.strip()
             event_dict['event_name'] = event_name
-            event_localtion = list_event_elm[1].getchildren()[0].text_content()
+            event_localtion = list_event_elm[1].getchildren()[0].text_content().strip()
             event_dict['event_localtion'] = event_localtion
             details.append(event_dict)
     except Exception as error:
