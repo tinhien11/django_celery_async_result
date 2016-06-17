@@ -32,18 +32,16 @@ class GHNSpider(BaseSpider):
 
         details = []
         try:
-            list_detail_event = tree.find_class('details-tracking')[0].getchildren()
-            for div_cluster_event in list_detail_event:
-                if div_cluster_event.tag != 'p':
-                    event_dict = {}
-                    for e in div_cluster_event:
-                        list_event_elm = e.getchildren()[0].getchildren()
-                        event_name = list_event_elm[1].text.strip()
-                        event_dict['event_name'] = event_name
-                        temp = list_event_elm[2].getchildren()
-                        event_dict['event_localtion'] = temp[0].text
-                        event_dict['event_time'] = temp[1].text
-                        details.append(event_dict)
+            list_detail_event = tree.find_class('item')
+            for e in list_detail_event:
+                event_dict = {}
+                list_event_elm = e.getchildren()
+                event_name = list_event_elm[1].text_content().strip()
+                event_dict['event_name'] = event_name
+                temp = list_event_elm[2].getchildren()
+                event_dict['event_localtion'] = temp[0].text_content()
+                event_dict['event_time'] = temp[1].text_content()
+                details.append(event_dict)
         except Exception as error:
             pass
 
@@ -54,7 +52,5 @@ class GHNSpider(BaseSpider):
 
 
 if __name__ == '__main__':
-    ghn = GHNSpider('MPDS-321351882-8472')
-    print ghn.parse_main()
-    print ghn.normalize()
+    ghn = GHNSpider('30929083467443')
     print repr(ghn.normalize()).decode("unicode-escape")
