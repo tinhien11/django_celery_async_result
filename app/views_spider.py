@@ -5,7 +5,7 @@ from tasks import task_get_data_from_spider
 from celery.result import AsyncResult
 
 
-class SpiderList(APIView):
+class TaskList(APIView):
     """
     List all snippets, or create a new task spider.
     """

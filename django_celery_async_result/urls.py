@@ -20,6 +20,6 @@ from app import views_spider
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^docs/', include('rest_framework_swagger.urls')),
-    url(r'^spider/$', views_spider.SpiderList.as_view()),
+    url(r'^task/$', views_spider.TaskList.as_view()),
 
 ]
