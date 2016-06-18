@@ -10,14 +10,15 @@ TRACKING_URL = ''
 class BaseSpider:
     def __init__(self, parcel_id):
         self.parcel_id = parcel_id
+        self.base_raw_data = {
+            'info_parcel': {'id': '', 'status': '', 'weight': '', 'size': '', 'price': '', 'deliver_time': '',
+                            'note': ''},
+            'info_from': {'address': '', 'name': '', 'tel': '', 'note': ''},
+            'info_to': {'address': '', 'name': '', 'tel': '', 'note': ''},
+            'detail_events': []}
 
     tracking_url = TRACKING_URL
 
-    base_raw_data = {
-        'info_parcel': {'id': '', 'status': '', 'weight': '', 'size': '', 'price': '', 'deliver_time': '', 'note': ''},
-        'info_from': {'address': '', 'name': '', 'tel': '', 'note': ''},
-        'info_to': {'address': '', 'name': '', 'tel': '', 'note': ''},
-        'detail_events': []}
 
     def get_opener_cookie(self):
         cj = cookielib.CookieJar()
