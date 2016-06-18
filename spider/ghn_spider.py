@@ -31,7 +31,7 @@ class GHNSpider(BaseSpider):
                 1].text_content().strip()
             self.base_raw_data['info_parcel']['note'] = tree.find_class('fix-status active')[0].text_content().strip()
         except Exception as error:
-            pass
+            print error
 
         # parse html to get info from, to
         try:
@@ -41,25 +41,28 @@ class GHNSpider(BaseSpider):
             self.base_raw_data['info_to']['tel'] = tracking_table_elm[2].text_content().strip()
             self.base_raw_data['info_to']['note'] = tracking_table_elm[3].text_content().strip()
         except Exception as error:
-            pass
+            print error
 
         try:
-            list_detail_event = tree.find_class('item')
-            for e in list_detail_event:
-                event_dict = {}
-                list_event_elm = e.getchildren()
-                event_name = list_event_elm[1].text_content().strip()
-                event_dict['event_name'] = event_name
-                temp = list_event_elm[2].getchildren()
-                event_dict['event_localtion'] = temp[0].text_content()
-                event_dict['event_time'] = temp[1].text_content()
-                # details.append(event_dict)
+            list_detail_event = tree.find_class('details-tracking')[0].getchildren()
+            location = ''
+            for detail in list_detail_event:
+                if detail.tag == 'p':
+                    location = detail.getchildren()[2].text_content()
+                else:
+                    detail_list = detail.getchildren()[0].getchildren()
+                    for e in detail_list:
+                        event_dict = {}
+                        temp = e.getchildren()
+                        event_dict['name'] = temp[1].text_content()
+                        event_dict['time'] = temp[2].getchildren()[1].text_content()
+                        event_dict['localtion'] = location
+                        self.base_raw_data['detail_events'].append(event_dict)
         except Exception as error:
-            pass
-
+            print error
         return self.base_raw_data
 
 
 if __name__ == '__main__':
-    ghn = GHNSpider('30929083467443')
+    ghn = GHNSpider('30929083461443')
     print repr(ghn.normalize()).decode("unicode-escape")
