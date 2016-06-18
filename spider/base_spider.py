@@ -13,6 +13,12 @@ class BaseSpider:
 
     tracking_url = TRACKING_URL
 
+    base_raw_data = {
+        'info_parcel': {'id': '', 'status': '', 'weight': '', 'size': '', 'price': '', 'deliver_time': '', 'note': ''},
+        'info_from': {'address': '', 'name': '', 'tel': '', 'note': ''},
+        'info_to': {'address': '', 'name': '', 'tel': '', 'note': ''},
+        'detail_events': [{'name': '', 'location': '', 'time': ''}]}
+
     def get_opener_cookie(self):
         cj = cookielib.CookieJar()
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
