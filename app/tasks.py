@@ -1,8 +1,9 @@
 from __future__ import unicode_literals
 
-from spider.vnpost_spider import VnpostSpider
-from spider.ghn_spider import GHNSpider
 from celery import task
+
+from spider.ghn_spider import GHNSpider
+from spider.vnpost_spider import VnpostSpider
 
 
 @task()

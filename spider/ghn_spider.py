@@ -31,7 +31,7 @@ class GHNSpider(BaseSpider):
                 1].text_content().strip()
             self.base_raw_data['info_parcel']['note'] = tree.find_class('fix-status active')[0].text_content().strip()
         except Exception as error:
-            print error
+            pass
 
         # parse html to get info from, to
         try:
@@ -41,7 +41,7 @@ class GHNSpider(BaseSpider):
             self.base_raw_data['info_to']['tel'] = tracking_table_elm[2].text_content().strip()
             self.base_raw_data['info_to']['note'] = tracking_table_elm[3].text_content().strip()
         except Exception as error:
-            print error
+            pass
 
         try:
             list_detail_event = tree.find_class('details-tracking')[0].getchildren()
@@ -59,7 +59,7 @@ class GHNSpider(BaseSpider):
                         event_dict['localtion'] = location
                         self.base_raw_data['detail_events'].append(event_dict)
         except Exception as error:
-            print error
+            pass
         return self.base_raw_data
 
 
