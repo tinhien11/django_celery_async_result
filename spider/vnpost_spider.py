@@ -22,30 +22,30 @@ class VnpostSpider(BaseSpider):
     def normalize(self):
 
         tree = lxml.html.fromstring(self.parse_main())
-        overview = {}
+        # overview = {}
         try:
             parcel_id_elm = tree.find_class('col-sm-3 package-code')[0].getchildren()
             parcel_id = parcel_id_elm[2].text_content().strip()
-            overview['parcel_id'] = parcel_id
+            # overview['parcel_id'] = parcel_id
+            self.base_raw_data['info_parcel']['id'] = parcel_id
 
             parcel_weight_elm = tree.find_class('col-sm-4 package-weight')[0].getchildren()
             parcel_weight = parcel_weight_elm[2].text_content().strip()
-            overview['parcel_weight'] = parcel_weight
+            self.base_raw_data['info_parcel']['weight'] = parcel_weight
 
             package_status_elm = tree.find_class('col-sm-4 package-location')[0].getchildren()
             parcel_status = package_status_elm[2].text_content().strip()
-            overview['parcel_status'] = parcel_status
+            self.base_raw_data['info_parcel']['status'] = parcel_status
 
             tracking_info_elm = tree.find_class('table-tracking-info')[0].getchildren()
             country_elm = tracking_info_elm[0]
             from_country = country_elm[1].text_content().strip()
             to_country = country_elm[3].text_content().strip()
-            overview['from_country'] = from_country
-            overview['from to_country'] = to_country
+            self.base_raw_data['info_from']['address'] = from_country
+            self.base_raw_data['info_to']['address'] = to_country
         except Exception as error:
             pass
 
-        details = []
         try:
             list_detail_event = tree.find_class('timeline-list-item')[0].getchildren()[0].getchildren()
             for e in list_detail_event:
@@ -57,14 +57,11 @@ class VnpostSpider(BaseSpider):
                 event_dict['event_name'] = event_name
                 event_localtion = list_event_elm[1].getchildren()[0].text_content().strip()
                 event_dict['event_localtion'] = event_localtion
-                details.append(event_dict)
+                self.base_raw_data['detail_events'].append(event_dict)
         except Exception as error:
             pass
 
-        res = {}
-        res['overview'] = overview
-        res['details'] = details
-        return res
+        return self.base_raw_data
 
 
 if __name__ == '__main__':

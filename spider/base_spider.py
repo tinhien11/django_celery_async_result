@@ -17,7 +17,7 @@ class BaseSpider:
         'info_parcel': {'id': '', 'status': '', 'weight': '', 'size': '', 'price': '', 'deliver_time': '', 'note': ''},
         'info_from': {'address': '', 'name': '', 'tel': '', 'note': ''},
         'info_to': {'address': '', 'name': '', 'tel': '', 'note': ''},
-        'detail_events': [{'name': '', 'location': '', 'time': ''}]}
+        'detail_events': []}
 
     def get_opener_cookie(self):
         cj = cookielib.CookieJar()
