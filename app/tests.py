@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test.utils import override_settings
 
-from app.tasks import add
+from app.tasks import task_get_data_from_spider
 
 
 class AddTestCase(TestCase):
@@ -10,6 +10,8 @@ class AddTestCase(TestCase):
         CELERY_ALWAYS_EAGER=True,
         BROKER_BACKEND='memory')
     def test_add_task(self):
-        result = add.delay('1', '2')
+        parcel_id = 'EL745355158VN'
+        result = task_get_data_from_spider.delay(parcel_id)
         self.assertTrue(result.successful())
-        self.assertEqual(result.result, '12', "Should return 12 on add string 1 and 2")
+        parcel_id_res = result.result.get('info_parcel').get('id')
+        self.assertEqual(parcel_id, parcel_id_res, "Should return 12 on add string 1 and 2")
